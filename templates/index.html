@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Dashboard</title>
+</head>
+<body>
+    <h1>Live Attendance</h1>
+    <table border="1" id="table">
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+    </table>
+
+    <script>
+        async function loadData() {
+            const res = await fetch('/data');
+            const data = await res.json();
+
+            const table = document.getElementById("table");
+
+            table.innerHTML = `
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            `;
+
+            data.forEach(row => {
+                table.innerHTML += `
+                    <tr>
+                        <td>${row.name}</td>
+                        <td>${row.date}</td>
+                        <td>${row.time}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        setInterval(loadData, 1000); // refresh every second
+    </script>
+</body>
+</html>
